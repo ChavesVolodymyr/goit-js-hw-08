@@ -63,79 +63,38 @@ const images = [
     description: 'Lighthouse Coast Sea',
   },
 ];
-// const markup = images.reduce((html, image) => {
-//   return (html += `
-//         <li class="gallery-item" >
-// <a class="gallery-link" href="${image.original}">
-// <img
-//   class="gallery-image"
-//   src="${image.preview}"
-//   data-source="${image.original}"
-//   alt="${image.description}"
-//   onclick ="event.preventDefault(); onImageClick(event);"
-// />
-// </a>
-// </li>`);
-// }, '');
-// console.log(markup);
-// const listImg = document.querySelector('.gallery');
-// listImg.insertAdjacentHTML('beforeend', markup);
-// listImg.addEventListener('click', onImageClick);
-// function onImageClick(event) {
-//   event.preventDefault();
-//   if (event.target.nodeName !== 'IMG') {
-//     return;
-//   }
-//   const imageItem = event.target.dataset.source;
-//   const modalImage = images.find(item => item.original === imageItem);
-//   const instance = basicLightbox.create(`
-//  <div class="modal">
-//         <a class="gallery-link" href="${modalImage.original}" onclick="event.preventDefault()">
-//                 <img
-//                     class="gallery-image"
-//                     src="${modalImage.original}"
-//                     data-source="${modalImage.original}"
-//                     alt="${modalImage.description}"
-//                 />
-//             </a>
-//     </div>
-// `);
-//   instance.show();
-// }
-
-const gallery = document.querySelector('.gallery');
-
-function imgToHtml(images) {
-  let htmlList = '';
-
-  for (let index = 0; index < images.length; index++) {
-    const { preview, original, description } = images[index];
-    htmlList += `<li class="gallery-item">
-        <a class="gallery-link" href="${original}">
-          <img
-            class="gallery-image"
-            src="${preview}"
-            data-source="${original}"
-            alt="${description}"
-          />
-        </a>
-      </li>`;
-  }
-  gallery.innerHTML = htmlList;
-}
-imgToHtml(images);
-
-gallery.addEventListener('click', event => {
+const markup = images.reduce((html, image) => {
+  return (html += `
+        <li class="gallery-item" >
+<a class="gallery-link" href="${image.original}">
+<img
+  class="gallery-image"
+  src="${image.preview}"
+  data-source="${image.original}"
+  alt="${image.description}"
+ "
+/>
+</a>
+</li>`);
+}, '');
+console.log(markup);
+const listImg = document.querySelector('.gallery');
+listImg.insertAdjacentHTML('beforeend', markup);
+listImg.addEventListener('click', event => {
   event.preventDefault();
-
-  if (event.target.classList.contains('gallery-image')) {
-    const originalImg = event.target.dataset.source;
-    const description = event.target.alt;
-
-    const instance = basicLightbox.create(`
-      <img class="modal-image" src="${originalImg}" alt="${description}">
-    `);
-
-    instance.show();
+  if (event.target.nodeName !== 'IMG') {
+    return;
   }
+  const imageItem = event.target.dataset.source;
+  const modalImage = images.find(item => item.original === imageItem);
+  const instance = basicLightbox.create(`
+                        <img
+                    class="gallery-image"
+                    src="${modalImage.original}"
+                    data-source="${modalImage.original}"
+                    alt="${modalImage.description}"
+                />
+           
+`);
+  instance.show();
 });
